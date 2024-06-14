@@ -2,11 +2,7 @@
 
 namespace Latgardi\ChangeIblockType;
 
-use Bitrix\ {
-    Iblock\ORM\Query,
-    Iblock\TypeTable,
-    Main\SystemException
-};
+use Bitrix\{Iblock\ORM\Query, Iblock\TypeTable, Main\Localization\Loc, Main\SystemException};
 use CModule;
 
 class EventHandler
@@ -39,7 +35,11 @@ class EventHandler
             $scriptSrc = substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT'])) . '/script.js';
             $script = "<script src='$scriptSrc'></script>";
             $content .= $script;
-            $content .= "<style>#bx-admin-prefix .bx-core-popup-menu-no-icons .bx-core-popup-menu-item-text { padding-left: 13px }</style>";
+            $content .= "<style>
+                            #bx-admin-prefix .bx-core-popup-menu-no-icons .bx-core-popup-menu-item-text { 
+                                padding-left: 13px 
+                            }
+                         </style>";
         }
     }
 
@@ -48,7 +48,7 @@ class EventHandler
         if (!is_null($types)) {
             $button = [
                 "ICON" => "btn_green",
-                "TEXT" => "Изменить тип инфоблока",
+                "TEXT" => Loc::getMessage('CHANGE_IBLOCK_TYPE'),
                 "MENU" => self::createMenuItems($types),
             ];
             if (count($menu) > 1) {
